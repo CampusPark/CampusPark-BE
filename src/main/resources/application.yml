@@ -1,0 +1,29 @@
+spring:
+  port: ${SPRING_PORT}
+  application:
+    name: CampusPark
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 15
+      minimum-idle: 15
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        hibernate.highlight_sql: true
+        hibernate.session.events.log.LOG_QUERIES_SLOWER_THAN_MS: 100
+  logging:
+    level:
+      org.hibernate.SQL: debug
+      org.hibernate.orm.jdbc.bind: trace
+      org.hibernate.type.descriptor.sql: trace
