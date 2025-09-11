@@ -1,4 +1,4 @@
-package org.example.campuspark.user;
+package org.example.campuspark.user.domain;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -9,8 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.campuspark.global.domain.BaseEntity;
-import org.example.campuspark.parkingspace.ParkingSpace;
-import org.example.campuspark.reservation.Reservation;
+import org.example.campuspark.parkingspace.domain.ParkingSpace;
+import org.example.campuspark.reservation.domain.Reservation;
 
 @Entity
 @Table(name = "users")
