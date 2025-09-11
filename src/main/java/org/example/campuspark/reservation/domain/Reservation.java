@@ -1,4 +1,4 @@
-package org.example.campuspark.reservation;
+package org.example.campuspark.reservation.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,8 +16,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.example.campuspark.parkingspace.ParkingSpace;
-import org.example.campuspark.user.UserEntity;
+import org.example.campuspark.parkingspace.domain.ParkingSpace;
+import org.example.campuspark.user.domain.UserEntity;
 
 @Entity
 @Table(name = "reservation")
