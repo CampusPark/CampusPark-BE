@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk
+FROM openjdk:21-jdk
 
 # 나중에 버전 하드코딩을 방지하려면 *.jar로 변경하는 게 나을 듯
 # -plain.jar 생성 방지하는 코드도 추가 필요함.
