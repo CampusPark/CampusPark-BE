@@ -27,3 +27,13 @@ spring:
       org.hibernate.SQL: debug
       org.hibernate.orm.jdbc.bind: trace
       org.hibernate.type.descriptor.sql: trace
+
+  cloud:
+    gcp:
+      credentials:
+        location: classpath:dalbit-471516-f3fb27a24dac.json
+      project-id: dalbit-471516
+
+kakao:
+  api:
+    key: ${KAKAO_API_KEY}
