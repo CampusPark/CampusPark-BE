@@ -14,7 +14,8 @@ public enum ErrorCode {
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "E003", "인증이 필요한 요청입니다."),
     FORBIDDEN(HttpStatus.FORBIDDEN, "E004", "해당 리소스에 접근할 권한이 없습니다."),
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "E005", "잘못된 요청입니다. 입력 값을 확인해주세요."),
-    VALIDATION_ERROR(HttpStatus.BAD_REQUEST, "E006", "유효성 검사에 실패했습니다. 올바른 값을 입력해 주세요");
+    VALIDATION_ERROR(HttpStatus.BAD_REQUEST, "E006", "유효성 검사에 실패했습니다. 올바른 값을 입력해 주세요"),
+    ERROR_IN_GEOCODING(HttpStatus.BAD_REQUEST, "E007", "주소 변환 중 오류가 발생했습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
