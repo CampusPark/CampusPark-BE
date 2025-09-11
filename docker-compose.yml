@@ -1,0 +1,39 @@
+services:
+  app:
+    container_name: campus-park-app
+    env_file:
+      - ${ENV_FILE}
+    depends_on:
+      - database
+    ports:
+      - ${SPRING_PORT}:${SPRING_PORT}
+    restart: "unless-stopped"
+    networks:
+      - campus-park-bridge
+
+  database:
+    image: mysql:8.4.4
+    container_name: campus-park-db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    command:
+      --port=${DB_PORT} --max_allowed_packet=32M
+    expose:
+      - ${DB_PORT}
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    restart: "unless-stopped"
+    volumes:
+      - campus-park-db:/var/lib/mysql
+    networks:
+      - campus-park-bridge
+
+volumes:
+    campus-park-db:
+
+networks:
+  moa-bridge:
+    driver: bridge
