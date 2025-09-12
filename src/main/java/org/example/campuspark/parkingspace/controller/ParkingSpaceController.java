@@ -21,9 +21,9 @@ public class ParkingSpaceController {
 
     private final ParkingSpaceService parkingSpaceService;
 
-    @PostMapping("{userId}")
+    @PostMapping()
     public ResponseEntity<ApiResponse<Void>> createParkingSpace(
-            @PathVariable Long userId,
+            @RequestParam("userId") Long userId,
             @Valid @RequestBody ParkingSpaceRequestDto requestDto) {
 
         parkingSpaceService.createParkingSpace(userId, requestDto);
@@ -55,6 +55,17 @@ public class ParkingSpaceController {
             @RequestParam(defaultValue = "5.0") Double radiusKm) {
 
         List<ParkingSpaceResponseDto> response = parkingSpaceService.getNearbyParkingSpaces(latitude, longitude, radiusKm);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    @GetMapping("/nearby/redis")
+    public ResponseEntity<ApiResponse<List<ParkingSpaceResponseDto>>> getNearbyParkingSpaces(
+            @RequestParam Long userId,
+            @RequestParam Double latitude,
+            @RequestParam Double longitude,
+            @RequestParam(defaultValue = "5.0") Double radiusKm) {
+
+        List<ParkingSpaceResponseDto> response = parkingSpaceService.storeNearbyParkingSpaces(userId, latitude, longitude, radiusKm);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
