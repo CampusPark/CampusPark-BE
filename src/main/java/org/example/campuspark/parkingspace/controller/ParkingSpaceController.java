@@ -53,7 +53,7 @@ public class ParkingSpaceController {
             @RequestParam Double latitude,
             @RequestParam Double longitude,
             @RequestParam(defaultValue = "5.0") Double radiusKm) {
-        log.info("GET /api/v1/parking-spaces/nearby - lat: {}, lon: {}, radius: {}", latitude, longitude, radiusKm);
+
         List<ParkingSpaceResponseDto> response = parkingSpaceService.getNearbyParkingSpaces(latitude, longitude, radiusKm);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
@@ -62,7 +62,7 @@ public class ParkingSpaceController {
     public ResponseEntity<ApiResponse<Void>> deleteParkingSpace(
             @RequestParam("userId") Long userId,
             @PathVariable Long parkingSpaceId) {
-        log.info("DELETE /api/v1/parking-spaces/{} - userId: {}", parkingSpaceId, userId);
+
         parkingSpaceService.deleteParkingSpace(userId, parkingSpaceId);
         return ResponseEntity.ok(ApiResponse.success("주차공간이 성공적으로 삭제되었습니다.", null));
     }

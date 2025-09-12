@@ -32,8 +32,6 @@ public class ParkingSpaceService {
 
         ParkingSpace parkingSpace = requestDto.toEntity(user);
         parkingSpaceRepository.save(parkingSpace);
-
-        return;
     }
 
     public ParkingSpaceResponseDto getParkingSpace(Long parkingSpaceId) {
@@ -45,7 +43,7 @@ public class ParkingSpaceService {
     public List<ParkingSpaceResponseDto> getNearbyParkingSpaces(Double latitude, Double longitude, Double radiusKm) {
         return parkingSpaceRepository.findNearbyParkingSpaces(latitude, longitude, radiusKm).stream()
             .map(ParkingSpaceResponseDto::from)
-            .collect(Collectors.toList());
+            .toList();
     }
 
     @Transactional
