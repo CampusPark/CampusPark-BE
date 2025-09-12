@@ -9,5 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
+    List<Reservation> findByUserId(Long userId);
     boolean existsByParkingSpaceAndStatusIn(ParkingSpace parkingSpace, List<ReservationStatus> statuses);
 }
