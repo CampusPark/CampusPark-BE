@@ -32,6 +32,15 @@ services:
     networks:
       - campus-park-bridge
 
+  valkey:
+    image: ghcr.io/valkey-io/valkey:7.2
+    container_name: campus-park-velkey
+    command: [ "valkey-server", "--port", "${VELKEY_PORT}" ]
+    ports:
+      - ${VELKEY_PORT}:${VELKEY_PORT}
+    networks:
+      - campus-park-bridge
+
 volumes:
     campus-park-db:
 
