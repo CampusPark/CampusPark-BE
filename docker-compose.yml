@@ -1,6 +1,7 @@
 services:
   app:
-    image: hyun7586/campus-park:latest
+    build:
+      context: .
     container_name: campus-park-app
     env_file:
       - ${ENV_FILE}
@@ -11,6 +12,8 @@ services:
     restart: "unless-stopped"
     networks:
       - campus-park-bridge
+    volumes:
+      - ./build/libs/campus-park-0.0.1-SNAPSHOT.jar:/app/app.jar
 
   database:
     image: mysql:8.4.4
@@ -47,3 +50,4 @@ volumes:
 networks:
   campus-park-bridge:
     driver: bridge
+
