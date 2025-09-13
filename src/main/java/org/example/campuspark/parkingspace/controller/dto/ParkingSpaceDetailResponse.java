@@ -1,7 +1,9 @@
 package org.example.campuspark.parkingspace.controller.dto;
 
-public record ParkingSpaceDetailResponse (
+import java.util.List;
 
-){
-
+public record ParkingSpaceDetailResponse(
+    ParkingSpaceResponseDto parkingSpace,
+    List<AvailableTimeSlotDto> availableTimeSlots
+) {
 }

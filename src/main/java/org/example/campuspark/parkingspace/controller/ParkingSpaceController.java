@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.campuspark.global.dto.ApiResponse;
 import org.example.campuspark.parkingspace.controller.dto.AvailableTimeSlotDto;
+import org.example.campuspark.parkingspace.controller.dto.ParkingSpaceDetailResponse;
 import org.example.campuspark.parkingspace.controller.dto.ParkingSpaceRequestDto;
 import org.example.campuspark.parkingspace.controller.dto.ParkingSpaceResponseDto;
 import org.example.campuspark.parkingspace.service.ParkingSpaceService;
@@ -39,6 +40,14 @@ public class ParkingSpaceController {
     public ResponseEntity<ApiResponse<ParkingSpaceResponseDto>> getParkingSpace(
             @PathVariable Long parkingSpaceId) {
         ParkingSpaceResponseDto response = parkingSpaceService.getParkingSpace(parkingSpaceId);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    @GetMapping("/{parkingSpaceId}/details")
+    public ResponseEntity<ApiResponse<org.example.campuspark.parkingspace.controller.dto.ParkingSpaceDetailResponse>> getParkingSpaceDetails(
+            @PathVariable Long parkingSpaceId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        ParkingSpaceDetailResponse response = parkingSpaceService.getParkingSpaceDetails(parkingSpaceId, date);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 //

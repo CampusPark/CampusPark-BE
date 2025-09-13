@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.campuspark.global.exception.BusinessException;
 import org.example.campuspark.global.exception.ErrorCode;
 import org.example.campuspark.parkingspace.controller.dto.AvailableTimeSlotDto;
+import org.example.campuspark.parkingspace.controller.dto.ParkingSpaceDetailResponse;
 import org.example.campuspark.parkingspace.controller.dto.ParkingSpaceRequestDto;
 import org.example.campuspark.parkingspace.controller.dto.ParkingSpaceResponseDto;
 import org.example.campuspark.parkingspace.domain.ParkingSpace;
@@ -75,13 +76,19 @@ public class ParkingSpaceService {
         return ParkingSpaceResponseDto.from(parkingSpace);
     }
 
+    public ParkingSpaceDetailResponse getParkingSpaceDetails(Long parkingSpaceId, LocalDate date) {
+        ParkingSpaceResponseDto parkingSpaceDto = getParkingSpace(parkingSpaceId);
+        List<AvailableTimeSlotDto> availableTimeSlots = getAvailableTimeSlots(parkingSpaceId, date);
+        return new ParkingSpaceDetailResponse(parkingSpaceDto, availableTimeSlots);
+    }
+
     public List<ParkingSpaceResponseDto> getNearbyParkingSpaces(Double latitude, Double longitude, Double radiusKm) {
         return parkingSpaceRepository.findNearbyParkingSpaces(latitude, longitude, radiusKm).stream()
             .map(ParkingSpaceResponseDto::from)
             .toList();
     }
 
-    public List<AvailableTimeSlotDto> getAvailableTimeSlots(Long parkingSpaceId, LocalDate date) {
+    public List<AvailableTimeSlotDto > getAvailableTimeSlots(Long parkingSpaceId, LocalDate date) {
         ParkingSpace parkingSpace = parkingSpaceRepository.findById(parkingSpaceId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.PARKING_SPACE_NOT_FOUND));
 
