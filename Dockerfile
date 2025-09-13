@@ -1,6 +1,8 @@
 # 1단계: 빌드를 위한 베이스 이미지
-FROM openjdk:21-jdk AS builder
+FROM eclipse-temurin:21-jdk-jammy AS builder
 WORKDIR /workspace/app
+
+RUN apt-get update && apt-get install -y findutils
 
 # 의존성 파일들만 먼저 복사
 COPY gradlew ./
@@ -18,7 +20,7 @@ RUN ./gradlew build -x test
 
 
 # 2단계: 실제 실행을 위한 경량 이미지
-FROM openjdk:21-jdk
+FROM eclipse-temurin:21-jre-jammy
 WORKDIR /app
 
 # non-root 사용자 설정 (보안 강화)
