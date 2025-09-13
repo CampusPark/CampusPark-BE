@@ -30,9 +30,19 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<ApiResponse<Object>> handleBusinessException(BusinessException e) {
         log.error("BusinessException: {}", e.getMessage(), e);
         ErrorCode errorCode = e.getErrorCode();
-
         return ResponseEntity.status(errorCode.getHttpStatus())
-                .body(ApiResponse.error(errorCode.getMessage()));
+                .body(ApiResponse.error(errorCode.getMessage(), errorCode.getCode()));
+    }
+
+    /**
+     * 커스텀 예외 처리
+     */
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<ApiResponse<Object>> handleCustomException(CustomException e) {
+        log.warn("Handled CustomException: code={}, status={}, msg={}",
+                e.getErrorCode(), e.getHttpStatus(), e.getMessage());
+        return ResponseEntity.status(e.getHttpStatus())
+                .body(ApiResponse.error(e.getMessage(), e.getErrorCode()));
     }
 
     /**
@@ -49,7 +59,7 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponse.error("입력값 검증에 실패했습니다.", errors));
+                .body(ApiResponse.error(ErrorCode.VALIDATION_ERROR.getMessage(), ErrorCode.VALIDATION_ERROR.getCode(), errors));
     }
 
     /**
@@ -66,7 +76,7 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponse.error("입력값 바인딩에 실패했습니다.", errors));
+                .body(ApiResponse.error(ErrorCode.INVALID_INPUT_VALUE.getMessage(), ErrorCode.INVALID_INPUT_VALUE.getCode(), errors));
     }
 
     /**
@@ -75,9 +85,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     protected ResponseEntity<ApiResponse<Object>> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
         log.error("MethodArgumentTypeMismatchException: {}", e.getMessage());
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponse.error("잘못된 타입의 값이 입력되었습니다."));
+        ErrorCode errorCode = ErrorCode.INVALID_TYPE_VALUE;
+        return ResponseEntity.status(errorCode.getHttpStatus())
+                .body(ApiResponse.error(errorCode.getMessage(), errorCode.getCode()));
     }
 
     /**
@@ -86,9 +96,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     protected ResponseEntity<ApiResponse<Object>> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         log.error("HttpRequestMethodNotSupportedException: {}", e.getMessage());
-
-        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
-                .body(ApiResponse.error("지원하지 않는 HTTP 메서드입니다."));
+        ErrorCode errorCode = ErrorCode.METHOD_NOT_ALLOWED;
+        return ResponseEntity.status(errorCode.getHttpStatus())
+                .body(ApiResponse.error(errorCode.getMessage(), errorCode.getCode()));
     }
 
     /**
@@ -97,8 +107,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ApiResponse<Object>> handleException(Exception e) {
         log.error("Unexpected Exception: {}", e.getMessage(), e);
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ApiResponse.error("서버 내부 오류가 발생했습니다."));
+        ErrorCode errorCode = ErrorCode.INTERNAL_SERVER_ERROR;
+        return ResponseEntity.status(errorCode.getHttpStatus())
+                .body(ApiResponse.error(errorCode.getMessage(), errorCode.getCode()));
     }
 }
