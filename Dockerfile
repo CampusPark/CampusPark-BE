@@ -3,6 +3,7 @@ FROM openjdk:21-jdk AS builder
 WORKDIR /workspace/app
 
 # 의존성 파일들만 먼저 복사
+COPY gradlew ./
 COPY build.gradle settings.gradle ./
 COPY gradle ./gradle
 
