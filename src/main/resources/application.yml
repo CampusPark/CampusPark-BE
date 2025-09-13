@@ -12,10 +12,15 @@ spring:
       maximum-pool-size: 15
       minimum-idle: 15
 
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
@@ -59,3 +64,5 @@ cloud:
       bucket: ${S3_BUCKET_NAME}
     region:
       region-value: ap-northeast-2
+
+
