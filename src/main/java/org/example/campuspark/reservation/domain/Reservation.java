@@ -17,7 +17,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.campuspark.parkingspace.domain.ParkingSpace;
-import org.example.campuspark.user.domain.UserEntity;
+import org.example.campuspark.user.domain.User;
 
 @Entity
 @Table(name = "reservation")
@@ -33,7 +33,7 @@ public class Reservation {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "space_id")

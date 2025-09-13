@@ -1,5 +1,6 @@
 package org.example.campuspark.parkingspace.domain;
 
+import java.time.LocalDateTime;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.campuspark.global.domain.BaseEntity;
 import org.example.campuspark.reservation.domain.Reservation;
-import org.example.campuspark.user.domain.UserEntity;
+import org.example.campuspark.user.domain.User;
 
 @Entity
 @Table(name = "parkingspaces")
@@ -26,7 +27,7 @@ public class ParkingSpace extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private User user;
 
     private String address;
 
@@ -34,15 +35,40 @@ public class ParkingSpace extends BaseEntity {
 
     private Double longitude;
 
-    private String availableHours;
+    private LocalDateTime availableStartTime;
 
-    private Integer pricePerHour;
+    private LocalDateTime availableEndTime;
+
+    private Integer price;
 
     private Boolean status;
 
-    // 주차 가능 대수
-    private int availableArea;
+    private int availableCount;
 
     @OneToMany(mappedBy = "parkingSpace", cascade = CascadeType.ALL)
     private List<Reservation> reservations = new ArrayList<>();
+
+    @Builder
+    public ParkingSpace(
+            String address,
+            Double latitude,
+            Double longitude,
+            LocalDateTime availableStartTime,
+            LocalDateTime availableEndTime,
+            Integer price,
+            Integer availableCount
+    ) {
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.availableStartTime = availableStartTime;
+        this.availableEndTime = availableEndTime;
+        this.price = price;
+        this.availableCount = availableCount;
+    }
+
+    public void updateStatus(Boolean status) {
+        this.status = status;
+    }
+
 }

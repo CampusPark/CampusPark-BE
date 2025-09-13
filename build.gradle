@@ -38,6 +38,9 @@ dependencies {
     implementation 'com.google.protobuf:protobuf-java:3.25.3'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
 
+    implementation platform('software.amazon.awssdk:bom:2.27.21')
+    implementation 'software.amazon.awssdk:s3'
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
