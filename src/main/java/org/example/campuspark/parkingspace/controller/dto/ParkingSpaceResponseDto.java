@@ -1,6 +1,7 @@
 package org.example.campuspark.parkingspace.controller.dto;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import org.example.campuspark.parkingspace.domain.ParkingSpace;
 
 public record ParkingSpaceResponseDto(
@@ -8,8 +9,8 @@ public record ParkingSpaceResponseDto(
     String address,
     Double latitude,
     Double longitude,
-    LocalDateTime availableStartTime,
-    LocalDateTime availableEndTime,
+    LocalTime availableStartTime,
+    LocalTime availableEndTime,
     Integer price,
     Boolean status,
     int availableCount

@@ -92,20 +92,9 @@ public class ParkingSpaceService {
         ParkingSpace parkingSpace = parkingSpaceRepository.findById(parkingSpaceId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.PARKING_SPACE_NOT_FOUND));
 
-        LocalDateTime dayStart = date.atStartOfDay();
-        LocalDateTime dayEnd = date.plusDays(1).atStartOfDay();
-
-        LocalDateTime availableStart = parkingSpace.getAvailableStartTime();
-        LocalDateTime availableEnd = parkingSpace.getAvailableEndTime();
-
-        // Check if the parking space is available at all on the given date
-        if (availableEnd.toLocalDate().isBefore(date) || availableStart.toLocalDate().isAfter(date)) {
-            return Collections.emptyList();
-        }
-
-        LocalDateTime searchStart = availableStart.toLocalDate().isEqual(date) ? availableStart : dayStart;
-        LocalDateTime searchEnd = availableEnd.toLocalDate().isEqual(date) ? availableEnd : dayEnd;
-
+        // Combine the date with the LocalTime to create the search window for the day
+        LocalDateTime searchStart = date.atTime(parkingSpace.getAvailableStartTime());
+        LocalDateTime searchEnd = date.atTime(parkingSpace.getAvailableEndTime());
 
         List<ReservationStatus> statuses = List.of(ReservationStatus.RESERVED, ReservationStatus.BEING_USED);
         List<Reservation> reservations = reservationRepository.findReservationsForDate(

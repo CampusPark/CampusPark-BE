@@ -3,9 +3,10 @@ package org.example.campuspark.parkingspace.controller.dto;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import org.example.campuspark.parkingspace.domain.ParkingSpace;
 import org.example.campuspark.user.domain.User;
+import org.springframework.cglib.core.Local;
 
 public record ParkingSpaceRequestDto(
     @NotNull(message = "주소는 필수입니다.")
@@ -18,10 +19,10 @@ public record ParkingSpaceRequestDto(
     Double longitude,
 
     @NotNull(message = "이용 가능 시작 시간은 필수입니다.")
-    LocalDateTime availableStartTime,
+    LocalTime availableStartTime,
 
     @NotNull(message = "이용 가능 종료 시간은 필수입니다.")
-    LocalDateTime availableEndTime,
+    LocalTime availableEndTime,
 
     @NotNull(message = "가격은 필수입니다.")
     @PositiveOrZero(message = "가격은 0 이상이어야 합니다.")
