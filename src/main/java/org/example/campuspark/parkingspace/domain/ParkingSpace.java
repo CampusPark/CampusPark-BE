@@ -2,6 +2,7 @@ package org.example.campuspark.parkingspace.domain;
 
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
@@ -35,9 +36,9 @@ public class ParkingSpace extends BaseEntity {
 
     private Double longitude;
 
-    private LocalDateTime availableStartTime;
+    private LocalTime availableStartTime;
 
-    private LocalDateTime availableEndTime;
+    private LocalTime availableEndTime;
 
     private Integer price;
 
@@ -53,8 +54,8 @@ public class ParkingSpace extends BaseEntity {
             String address,
             Double latitude,
             Double longitude,
-            LocalDateTime availableStartTime,
-            LocalDateTime availableEndTime,
+            LocalTime availableStartTime,
+            LocalTime availableEndTime,
             Integer price,
             Integer availableCount
     ) {

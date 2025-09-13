@@ -34,6 +34,9 @@ public enum ErrorCode {
 
     // ParkingSpace
     PARKING_SPACE_NOT_FOUND(HttpStatus.NOT_FOUND, "P001", "주차공간을 찾을 수 없습니다."),
+    PARSING_ERROR(HttpStatus.BAD_REQUEST, "P006", "주차공간 번호 분석에 실패했습니다."),
+    NO_NEARBY_PARKING_SPACES_FOUND(HttpStatus.NOT_FOUND, "P007", "주변에 주차공간이 없습니다."),
+    INVALID_PARKING_SPACE_SELECTION(HttpStatus.BAD_REQUEST, "P008", "잘못된 주차공간 선택입니다."),
     PARKING_SPACE_ACCESS_DENIED(HttpStatus.FORBIDDEN, "P002", "주차공간에 접근할 권한이 없습니다."),
     MAX_PARKING_SPACE_LIMIT_EXCEEDED(HttpStatus.BAD_REQUEST, "P003", "주차공간 등록 한도를 초과했습니다."),
     CANNOT_DEACTIVATE_WITH_RESERVATIONS(HttpStatus.BAD_REQUEST, "P004", "예약이 있는 주차공간은 비활성화할 수 없습니다."),
