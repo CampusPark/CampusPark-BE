@@ -32,8 +32,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
-    implementation 'com.google.cloud:spring-cloud-gcp-starter:4.8.3'
-    implementation 'com.google.cloud:google-cloud-speech:4.37.0'
+    
 
     implementation 'com.google.protobuf:protobuf-java:3.25.3'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
