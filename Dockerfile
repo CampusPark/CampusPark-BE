@@ -1,34 +1,16 @@
-# 1단계: 빌드를 위한 베이스 이미지
-FROM eclipse-temurin:21-jdk-jammy AS builder
-WORKDIR /workspace/app
-
-RUN apt-get update && apt-get install -y findutils
-
-# 의존성 파일들만 먼저 복사
-COPY gradlew ./
-COPY build.gradle settings.gradle ./
-COPY gradle ./gradle
-
-# 의존성 다운로드 (이 부분은 거의 바뀌지 않으므로 캐싱됨)
-RUN ./gradlew dependencies --info
-
-# 소스 코드 복사 (자주 바뀌는 부분)
-COPY src ./src
-
-# 애플리케이션 빌드
-RUN ./gradlew build -x test
-
-
-# 2단계: 실제 실행을 위한 경량 이미지
+# JRE 이미지를 기반으로 사용 (경량화)
 FROM eclipse-temurin:21-jre-jammy
-WORKDIR /app
 
 # non-root 사용자 설정 (보안 강화)
 RUN groupadd -r appgroup && useradd -r -g appgroup appuser
 USER appuser
 
-# 빌드 단계에서 생성된 jar 파일만 복사
-COPY --from=builder /workspace/app/build/libs/*.jar app.jar
+# 컨테이너의 작업 디렉토리 설정
+WORKDIR /app
+
+# 애플리케이션 실행
+# JAR 파일은 Docker 빌드 과정에서 복사되지 않으며,
+# docker-compose.yml 파일에서 볼륨 마운트를 통해 제공됩니다.
+ENTRYPOINT ["java", "-jar", "app.jar"]
 
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","app.jar"]
