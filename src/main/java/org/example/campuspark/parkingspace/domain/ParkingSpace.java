@@ -48,6 +48,8 @@ public class ParkingSpace extends BaseEntity {
 
     private int availableCount;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String thumbnailUrl;
 
     @OneToMany(mappedBy = "parkingSpace", cascade = CascadeType.ALL, orphanRemoval = true)

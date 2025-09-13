@@ -55,6 +55,7 @@ public record ParkingSpaceRequestDto(
             .price(price)
             .status(true)
             .availableCount(availableCount)
+            .thumbnailUrl(thumbnailUrl)
             .build();
     }
 }
