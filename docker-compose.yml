@@ -1,6 +1,7 @@
 services:
   app:
-    image: hyun7586/campus-park:latest
+    build:
+      context: .
     container_name: campus-park-app
     env_file:
       - ${ENV_FILE}
