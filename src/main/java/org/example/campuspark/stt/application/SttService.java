@@ -39,7 +39,7 @@ public class SttService {
      * @return
      */
     public List<ParkingSpaceResponseDto> getParkingSpacesByAddress(Long userId, String addressText) {
-        CoordinateResponse coordinate = geoCodingService.getCoordinates(addressText);
+        CoordinateResponse coordinate = geoCodingService.getCoordinatesByKeyword(addressText);
 
         return parkingSpaceService.storeNearbyParkingSpaces(userId, coordinate.latitude(), coordinate.longitude(), DEFAULT_RADIUS);
     }

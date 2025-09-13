@@ -19,7 +19,7 @@ public class GeoCodingController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<CoordinateResponse>> getCoordinates(@RequestParam String address) {
-        CoordinateResponse response = geoCodingService.getCoordinates(address);
+        CoordinateResponse response = geoCodingService.getCoordinatesByKeyword(address);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 }
