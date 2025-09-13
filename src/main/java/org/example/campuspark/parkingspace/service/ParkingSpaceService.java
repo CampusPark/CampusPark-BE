@@ -66,7 +66,7 @@ public class ParkingSpaceService {
 
     private void cacheNearbyParkingSpaceIds(Long userId, List<Long> spaceIds) {
         String redisKey = "nearby_parks:" + userId;
-        redisTemplate.opsForValue().set(redisKey, spaceIds, 30, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(redisKey, spaceIds, 60, TimeUnit.SECONDS);
     }
 
     public ParkingSpaceResponseDto getParkingSpace(Long parkingSpaceId) {
