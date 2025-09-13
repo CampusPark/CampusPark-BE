@@ -31,13 +31,13 @@ public class SttController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-//    @GetMapping("/detail")
-//    public ResponseEntity<ApiResponse<List<ParkingSpaceDetailResponse>>> getParkingSpaceDetails(
-//            @RequestParam Long userId,
-//            @RequestBody TextParseRequest request
-//    ) {
-//        List<ParkingSpaceDetailResponse> response = sttService.getParkingSpaceDetails(userId, request);
-//        return ResponseEntity.ok(ApiResponse.success(response));
-//    }
+    @GetMapping("/detail")
+    public ResponseEntity<ApiResponse<ParkingSpaceDetailResponse>> getParkingSpaceDetails(
+            @RequestParam Long userId,
+            @RequestBody TextParseRequest request
+    ) {
+        ParkingSpaceDetailResponse response = sttService.getParkingSpaceDetails(userId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
 
 }
