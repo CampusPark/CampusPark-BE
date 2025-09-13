@@ -4,8 +4,10 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.example.campuspark.geocoding.dto.CoordinateResponse;
 import org.example.campuspark.geocoding.service.GeoCodingService;
+import org.example.campuspark.parkingspace.controller.dto.ParkingSpaceDetailResponse;
 import org.example.campuspark.parkingspace.controller.dto.ParkingSpaceResponseDto;
 import org.example.campuspark.parkingspace.service.ParkingSpaceService;
+import org.example.campuspark.stt.controller.dto.TextParseRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,4 +30,7 @@ public class SttService {
     }
 
 
+//    public List<ParkingSpaceDetailResponse> getParkingSpaceDetails(Long userId, TextParseRequest request) {
+//
+//    }
 }
