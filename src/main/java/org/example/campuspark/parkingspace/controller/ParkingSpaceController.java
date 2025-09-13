@@ -1,12 +1,15 @@
 package org.example.campuspark.parkingspace.controller;
 
 import jakarta.validation.Valid;
+import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.campuspark.global.dto.ApiResponse;
+import org.example.campuspark.parkingspace.controller.dto.AvailableTimeSlotDto;
 import org.example.campuspark.parkingspace.controller.dto.ParkingSpaceRequestDto;
 import org.example.campuspark.parkingspace.controller.dto.ParkingSpaceResponseDto;
 import org.example.campuspark.parkingspace.service.ParkingSpaceService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,6 +69,14 @@ public class ParkingSpaceController {
             @RequestParam(defaultValue = "5.0") Double radiusKm) {
 
         List<ParkingSpaceResponseDto> response = parkingSpaceService.storeNearbyParkingSpaces(userId, latitude, longitude, radiusKm);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    @GetMapping("/{parkingSpaceId}/availability")
+    public ResponseEntity<ApiResponse<List<AvailableTimeSlotDto>>> getAvailableTimeSlots(
+            @PathVariable Long parkingSpaceId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        List<AvailableTimeSlotDto> response = parkingSpaceService.getAvailableTimeSlots(parkingSpaceId, date);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
