@@ -25,7 +25,7 @@ public class SttController {
 
     private final SttService sttService;
 
-    @GetMapping("/list")
+    @PostMapping("/list")
     public ResponseEntity<ApiResponse<List<ParkingSpaceResponseDto>>> getNearbyParkingSpaces(
             @RequestParam Long userId,
             @RequestBody AddressRequest request
