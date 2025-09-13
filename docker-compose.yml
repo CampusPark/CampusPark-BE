@@ -13,7 +13,7 @@ services:
     networks:
       - campus-park-bridge
     volumes:
-      - ./build/libs/campus-park-0.0.1-SNAPSHOT.jar:/app/app.jar
+      - ./build/libs/Campus-park-0.0.1-SNAPSHOT.jar:/app/app.jar
 
   database:
     image: mysql:8.4.4
