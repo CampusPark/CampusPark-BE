@@ -2,7 +2,10 @@ package org.example.campuspark.stt.application;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.example.campuspark.ai.dto.TimeRangeDto;
 import org.example.campuspark.ai.service.NumberParsingService;
 import org.example.campuspark.geocoding.dto.CoordinateResponse;
 import org.example.campuspark.geocoding.service.GeoCodingService;
@@ -12,9 +15,13 @@ import org.example.campuspark.global.redis.RedisService;
 import org.example.campuspark.parkingspace.controller.dto.ParkingSpaceDetailResponse;
 import org.example.campuspark.parkingspace.controller.dto.ParkingSpaceResponseDto;
 import org.example.campuspark.parkingspace.service.ParkingSpaceService;
+import org.example.campuspark.reservation.dto.ReservationRequest;
+import org.example.campuspark.reservation.dto.ReservationResponse;
+import org.example.campuspark.reservation.service.ReservationService;
 import org.example.campuspark.stt.controller.dto.TextParseRequest;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SttService {
@@ -23,6 +30,7 @@ public class SttService {
     private final ParkingSpaceService parkingSpaceService;
     private final NumberParsingService numberParsingService;
     private final RedisService redisService;
+    private final ReservationService reservationService;
 
     /**
      * 주소를 기반으로 주변 주차 공간을 조회합니다.
@@ -49,7 +57,21 @@ public class SttService {
             throw new BusinessException(ErrorCode.INVALID_PARKING_SPACE_SELECTION);
         }
 
-        Long parkingSpaceId = nearbySpaceIds.get(number - 1);
+        Long parkingSpaceId = ((Number) nearbySpaceIds.get(number - 1)).longValue();
         return parkingSpaceService.getParkingSpaceDetails(parkingSpaceId, LocalDate.now());
+    }
+
+    public ReservationResponse reserveParkingSpace(Long userId, Long parkingSpaceId, TextParseRequest request) {
+        CompletableFuture<TimeRangeDto> future = numberParsingService.parseTimeRange(request.text());
+        TimeRangeDto timeRange = future.join();
+
+        log.info("Parsed time range: {} - {}", timeRange.startTime(), timeRange.endTime());
+        ReservationRequest reservationRequest = new ReservationRequest(
+                parkingSpaceId,
+                timeRange.startTime(),
+                timeRange.endTime()
+        );
+
+        return reservationService.createReservation(userId, reservationRequest);
     }
 }
