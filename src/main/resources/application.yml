@@ -40,6 +40,11 @@ spring:
           api-key: ${OPENAI_API_KEY}
 
         completions-path: "/chat/completions"
+  data:
+    redis:
+      host: ${VALKEY_HOST}
+      port: ${VALKEY_PORT:6379}
+
 
 kakao:
   api:
