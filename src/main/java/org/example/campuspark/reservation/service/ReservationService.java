@@ -33,12 +33,11 @@ public class ReservationService {
         ParkingSpace parkingSpace = parkingSpaceRepository.findById(request.parkingSpaceId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.PARKING_SPACE_NOT_FOUND));
 
-        if (request.startTime().isBefore(parkingSpace.getAvailableStartTime()) ||
-                request.endTime().isAfter(parkingSpace.getAvailableEndTime())) {
+        if (request.startTime().toLocalTime().isBefore(parkingSpace.getAvailableStartTime()) ||
+                request.endTime().toLocalTime().isAfter(parkingSpace.getAvailableEndTime())) {
             throw new BusinessException(ErrorCode.INVALID_RESERVATION_TIME);
         }
 
-        // Check for overlapping reservations
         List<ReservationStatus> statusesToCheck = List.of(ReservationStatus.RESERVED, ReservationStatus.BEING_USED);
         boolean isOverlapping = reservationRepository.existsOverlappingReservation(
                 parkingSpace,
