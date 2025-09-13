@@ -32,6 +32,8 @@ public class ParkingSpace extends BaseEntity {
 
     private String address;
 
+    private String name;
+
     private Double latitude;
 
     private Double longitude;
@@ -46,18 +48,28 @@ public class ParkingSpace extends BaseEntity {
 
     private int availableCount;
 
+    private String thumbnailUrl;
+
+    @OneToMany(mappedBy = "parkingSpace", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<ParkingSpacePhoto> photos = new ArrayList<>();
+
     @OneToMany(mappedBy = "parkingSpace", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<Reservation> reservations = new ArrayList<>();
 
     @Builder
     public ParkingSpace(
             String address,
+            String name,
             Double latitude,
             Double longitude,
             LocalTime availableStartTime,
             LocalTime availableEndTime,
             Integer price,
-            Integer availableCount
+            Integer availableCount,
+            String thumbnailUrl
+
     ) {
         this.address = address;
         this.latitude = latitude;
@@ -66,6 +78,7 @@ public class ParkingSpace extends BaseEntity {
         this.availableEndTime = availableEndTime;
         this.price = price;
         this.availableCount = availableCount;
+        this.thumbnailUrl = thumbnailUrl;
     }
 
     public void updateStatus(Boolean status) {

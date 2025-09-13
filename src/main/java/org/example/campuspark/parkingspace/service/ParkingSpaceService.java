@@ -43,6 +43,13 @@ public class ParkingSpaceService {
             .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
         ParkingSpace parkingSpace = requestDto.toEntity(user);
+
+        if (requestDto.photoUrls() != null && !requestDto.photoUrls().isEmpty()) {
+            requestDto.photoUrls().forEach(url -> {
+                parkingSpace.getPhotos().add(org.example.campuspark.parkingspace.domain.ParkingSpacePhoto.create(parkingSpace, url));
+            });
+        }
+
         parkingSpaceRepository.save(parkingSpace);
     }
 

@@ -2,6 +2,8 @@ package org.example.campuspark.parkingspace.controller.dto;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.example.campuspark.parkingspace.domain.ParkingSpace;
 
 public record ParkingSpaceResponseDto(
