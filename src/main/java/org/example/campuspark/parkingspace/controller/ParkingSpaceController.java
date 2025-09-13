@@ -44,7 +44,7 @@ public class ParkingSpaceController {
     }
 
     @GetMapping("/{parkingSpaceId}/details")
-    public ResponseEntity<ApiResponse<org.example.campuspark.parkingspace.controller.dto.ParkingSpaceDetailResponse>> getParkingSpaceDetails(
+    public ResponseEntity<ApiResponse<ParkingSpaceDetailResponse>> getParkingSpaceDetails(
             @PathVariable Long parkingSpaceId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         ParkingSpaceDetailResponse response = parkingSpaceService.getParkingSpaceDetails(parkingSpaceId, date);

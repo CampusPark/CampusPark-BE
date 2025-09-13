@@ -46,6 +46,7 @@ public record ParkingSpaceRequestDto(
     public ParkingSpace toEntity(User user) {
         return ParkingSpace.builder()
             .user(user)
+            .name(name)
             .address(address)
             .latitude(latitude)
             .longitude(longitude)
